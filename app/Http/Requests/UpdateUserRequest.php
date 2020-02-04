@@ -21,13 +21,13 @@ class UpdateUserRequest extends FormRequest
             'email'   => [
                 'required',
             ],
-            'roles.*' => [
-                'integer',
-            ],
-            'roles'   => [
-                'required',
-                'array',
-            ],
+//            'roles.*' => [
+//                'integer',
+//            ],
+//            'roles'   => [
+//                'required',
+//                'array',
+//            ],
         ];
     }
 }

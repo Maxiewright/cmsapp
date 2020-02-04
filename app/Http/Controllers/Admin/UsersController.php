@@ -24,6 +24,7 @@ class UsersController extends Controller
     {
         abort_unless(\Gate::allows('user_create'), 403);
 
+//
         $roles = Role::all()->pluck('title', 'id');
 
         return view('admin.users.create', compact('roles'));
