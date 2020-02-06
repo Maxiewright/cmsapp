@@ -7,6 +7,7 @@
     </div>
 
     <div class="card-body">
+        <div class="row">
         {!! Form::open(['method'=>'Post', 'action'=>'Admin\UsersController@store', 'enctype'=>'multipart/form-data']) !!}
 
             <div class="form-group ">
@@ -30,7 +31,7 @@
             </div>
             <div class="form-group">
                 {!! Form::label('photo_id', 'Photo', ['class' => 'control-label']) !!}
-                {!! Form::file('photo_id', null, ['class'=>'form-control'])!!}
+                {!! Form::file('photo_id', ['class'=>'orm-control-file'])!!}
             </div>
 
             <div class="form-group ">
@@ -45,6 +46,11 @@
         @include('errors.form-error')
 
         {!! Form::close() !!}
+        </div>
+        <div class="row">
+            @include('errors.form-error')
+        </div>
+
     </div>
 </div>
 

@@ -6,7 +6,9 @@ use App\Role;
 use Closure;
 use Illuminate\Support\Facades\Gate;
 
-class AuthGates
+class
+
+AuthGates
 {
     public function handle($request, Closure $next)
     {

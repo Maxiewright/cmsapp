@@ -10,6 +10,7 @@
                     {{ trans('global.dashboard') }}
                 </a>
             </li>
+
             <li class="nav-item nav-dropdown">
                 <a class="nav-link  nav-dropdown-toggle">
                     <i class="fas fa-users nav-icon">
@@ -44,14 +45,49 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a href="{{ route("admin.products.index") }}" class="nav-link {{ request()->is('admin/products') || request()->is('admin/products/*') ? 'active' : '' }}">
-                    <i class="fas fa-cogs nav-icon">
+{{--            Posts Drop down menu--}}
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link  nav-dropdown-toggle">
+                    <i class="fas fa-comment nav-icon">
 
                     </i>
-                    {{ trans('global.product.title') }}
+                    Posts
                 </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a href="{{ route("admin.posts.index") }}" class="nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
+                            <i class="fas fa-book-reader nav-icon">
+
+                            </i>
+                            All Post
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route("admin.posts.create") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
+                            <i class="fas fa-plus-square nav-icon">
+
+                            </i>
+                            Create Posts
+                        </a>
+                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="{{ route("admin.users.index") }}" class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">--}}
+{{--                            <i class="fas fa-user nav-icon">--}}
+
+{{--                            </i>--}}
+{{--                            {{ trans('global.user.title') }}--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+                </ul>
             </li>
+
+{{--            <li class="nav-item">--}}
+{{--                <a href="{{ route("admin.posts.index") }}" class="nav-link {{ request()->is('admin/products') || request()->is('admin/products/*') ? 'active' : '' }}">--}}
+{{--                    <i class="fas fa-cogs nav-icon">   </i>--}}
+{{--                        <i class="fas fa-comment nav-icon"></i>--}}
+{{--                    Post--}}
+{{--                </a>--}}
+{{--            </li>--}}
             <li class="nav-item">
                 <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                     <i class="nav-icon fas fa-sign-out-alt">

@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Photo;
 use App\Role;
 use App\User;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\Console\Input\Input;
 
 class UsersController extends Controller
@@ -119,7 +120,12 @@ class UsersController extends Controller
     {
         abort_unless(\Gate::allows('user_delete'), 403);
 
+
         $user->delete();
+
+        unlink(public_path() . $user->photo->file);
+
+        Session::flash('deleted_user', $user->name . " has been removed" );
 
         return back();
     }
@@ -127,6 +133,7 @@ class UsersController extends Controller
     public function massDestroy(MassDestroyUserRequest $request)
     {
         User::whereIn('id', request('ids'))->delete();
+
 
         return response(null, 204);
     }
