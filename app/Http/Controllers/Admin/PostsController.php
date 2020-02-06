@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\Http\Requests\PostCreateRequest;
 use App\Photo;
 use App\Post;
@@ -34,10 +35,9 @@ class PostsController extends Controller
     public function create()
     {
         abort_unless(\Gate::allows('post_create'), 403);
+            $categories = Category::all()->pluck('name','id');
 
-//        $roles = Role::all()->pluck('title', 'id');
-
-        return view('admin.posts.create');
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
