@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Photo;
 use App\Role;
 use App\User;
+use Symfony\Component\Console\Input\Input;
 
 class UsersController extends Controller
 {
@@ -30,12 +32,33 @@ class UsersController extends Controller
         return view('admin.users.create', compact('roles'));
     }
 
-    public function store(StoreUserRequest $request)
+
+    public function store(StoreUserRequest $request, User $input)
     {
         abort_unless(\Gate::allows('user_create'), 403);
 
-        $user = User::create($request->all());
-        $user->roles()->sync($request->input('roles', []));
+//
+        $input = $request->all();
+
+        if($request->file('photo_id')){
+                //Get filename with the extension
+                $filenameWithExt = $request->file('photo_id')->getClientOriginalName();
+                //Get just filename
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                //Get extension
+                $extension = $request->file('photo_id')->getClientOriginalExtension();
+                //File name to store
+                $fileNameToStore= $filename.'_'.time().'.'.$extension;
+                // Upload Image
+                $file = $request->file('photo_id')->storeAs('public/images', $fileNameToStore);
+
+                $photo = Photo::create(['file'=>$fileNameToStore]);
+
+                $input['photo_id'] = $photo->id;
+
+            }
+
+            User::create($input)->roles()->sync($request->input('roles', []));;
 
         return redirect()->route('admin.users.index');
     }
@@ -55,11 +78,33 @@ class UsersController extends Controller
     {
         abort_unless(\Gate::allows('user_edit'), 403);
 
-        $user->update($request->all());
-        $user->roles()->sync($request->input('roles', []));
+//
+        $input = $request->all();
 
+        if($request->file('photo_id')){
+            //Get filename with the extension
+            $filenameWithExt = $request->file('photo_id')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            //Get extension
+            $extension = $request->file('photo_id')->getClientOriginalExtension();
+            //File name to store
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $file = $request->file('photo_id')->storeAs('public/images', $fileNameToStore);
+
+            $photo = Photo::create(['file'=>$fileNameToStore]);
+
+            $input['photo_id'] = $photo->id;
+
+        }
+
+//        User::create($input)->roles()->sync($request->input('roles', []));
+        $user->update($input);
+        $user->roles()->sync($request->input('roles', []));
         return redirect()->route('admin.users.index');
     }
+
 
     public function show(User $user)
     {

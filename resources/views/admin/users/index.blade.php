@@ -25,6 +25,7 @@
                         <th width="10">
 
                         </th>
+                        <th> Photo </th>
                         <th>
                             {{ trans('global.user.fields.id') }}
                         </th>
@@ -51,6 +52,9 @@
                         <tr data-entry-id="{{ $user->id }}">
                             <td>
 
+                            </td>
+                            <td>
+                                <img height="40" src="{{$user->photo ? $user->photo->file : 'http://placehold.it/400x400'}}" alt="">
                             </td>
                             <td>
                                 {{ $user->id ?? '' }}

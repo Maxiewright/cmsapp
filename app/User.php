@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use function Symfony\Component\Debug\Tests\testHeader;
 
 /**
  * App\User
@@ -98,8 +99,16 @@ class User extends Authenticatable
         $this->notify(new ResetPassword($token));
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function roles()
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public  function  photo(){
+        return $this->belongsTo(Photo::class);
+    }
+
 }
